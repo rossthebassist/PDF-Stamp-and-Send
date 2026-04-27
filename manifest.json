@@ -1,0 +1,25 @@
+{
+  "name": "PDF Stamp and Send",
+  "author": {
+    "name": "Ross Hindhaugh",
+    "email": "ross.hindhaugh@northumbria-healthcare.nhs.uk",
+    "url": "https://fleetsolutions.zendesk.com/api/v2/users/4603801070751.json"
+  },
+  "defaultLocale": "en",
+  "location": {
+    "support": {
+      "ticket_sidebar": {
+        "url": "assets/index.html",
+        "flexible": true
+      },
+      "new_ticket_sidebar": {
+        "url": "assets/index.html",
+        "flexible": true
+      }
+    }
+  },
+  "version": "1.0",
+  "frameworkVersion": "2.0",
+  "domainWhitelist": [],
+  "private": true
+}

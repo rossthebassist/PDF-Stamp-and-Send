@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1"
+    />
+
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.log({error});
+        window.parent.postMessage({
+          type: 'iframe-error',
+          error: error?.toString(),
+          stack: error?.stack,
+          message,
+          source,
+          lineno,
+          colno
+        }, '*');
+        return false;
+      };
+
+      // Also catch unhandled promise rejections
+      window.addEventListener('unhandledrejection', function(event) {
+        window.parent.postMessage({
+          type: 'iframe-error',
+          error: event.reason?.toString(),
+          stack: event.reason?.stack
+        }, '*');
+      });
+    </script>
+
+    <style>
+        html {
+          --tw-bg-opacity: 1;
+          --tw-text-opacity: 1;
+          font-feature-settings: "kern", "kern";
+          background-color: #fff;
+          box-sizing: border-box;
+          overflow-y: auto!important;
+          color: #293239;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, sans-serif;
+          font-kerning: normal;
+          font-size: 14px;
+          line-height: 20px;
+          min-height: 100%;
+      }
+
+      *,:after,:before{
+      	box-sizing:border-box;
+      }
+
+      html{
+      	font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+      	line-height:1.15;
+      	-webkit-text-size-adjust:100%;
+      	-moz-tab-size:4;
+      	  -o-tab-size:4;
+      	     tab-size:4;
+      }
+
+      body{
+      	margin:0;
+      }
+
+      b,strong{
+      	font-weight:bolder;
+      }
+
+      code,kbd,pre,samp{
+      	font-family:ui-monospace,SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+      	font-size:1em;
+      }
+
+      small{
+      	font-size:80%;
+      }
+
+      sub,sup{
+      	font-size:75%;
+      	line-height:0;
+      	position:relative;
+      	vertical-align:baseline;
+      }
+
+      sub{
+      	bottom:-.25em;
+      }
+
+      sup{
+      	top:-.5em;
+      }
+
+      table{
+      	border-color:currentcolor;
+      }
+
+      button,input,optgroup,select,textarea{
+      	font-family:inherit;
+      	font-size:100%;
+      	line-height:1.15;
+      	margin:0;
+      }
+
+      [type=button],[type=reset],[type=submit],button{
+      	-webkit-appearance:button;
+      }
+
+      legend{
+      	padding:0;
+      }
+
+      progress{
+      	vertical-align:baseline;
+      }
+
+      ::-webkit-inner-spin-button,::-webkit-outer-spin-button{
+      	height:auto;
+      }
+
+      [type=search]{
+      	-webkit-appearance:textfield;
+      	outline-offset:-2px;
+      }
+
+      ::-webkit-search-decoration{
+      	-webkit-appearance:none;
+      }
+
+      ::-webkit-file-upload-button{
+      	-webkit-appearance:button;
+      	font:inherit;
+      }
+
+      summary{
+      	display:list-item;
+      }
+
+      /* Additional normalization (kept distinct from initial block for clarity) */
+      html {
+      	background-color: #fff;
+      	min-height: 100%;
+      	box-sizing: border-box;
+      	overflow-y: scroll;
+      	line-height: 20px;
+      	color: #293239;
+      	font-feature-settings: "kern", "kern";
+      	font-kerning: normal;
+      	font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
+      	font-size: 14px;
+      }
+
+      * {
+      	font-weight: inherit;
+      }
+
+      *,:after,:before {
+      	box-sizing: inherit;
+      }
+
+      a {
+      	color: #1f73b7;
+      }
+
+      b {
+      	font-weight: 600;
+      }
+
+      button {
+      	cursor: pointer;
+      	padding: 0;
+      }
+
+      button,input,optgroup,select,textarea {
+      	line-height: inherit;
+      	font-family: inherit;
+      }
+
+      code {
+      	font-size: .95em;
+      }
+
+      code,kbd,pre,samp {
+      	font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+      }
+
+      em {
+      	font-style: inherit;
+      }
+
+      fieldset,iframe {
+      	border-width: 0;
+      }
+
+      h1,h2,h3,h4,h5,h6 {
+      	font-size: inherit;
+      }
+
+      blockquote,dd,dl,fieldset,figure,h1,h2,h3,h4,h5,h6,hr,ol,p,pre,ul {
+      	margin: 0;
+      	padding: 0;
+      }
+
+      hr {
+      	border: none;
+      	border-top: 1px solid;
+      	border-color: #d8dcde;
+      }
+
+      ins,u {
+      	text-decoration-line: none;
+      }
+
+      ol,ul {
+      	list-style-type: none;
+      }
+
+      img {
+      	max-width: 100%;
+      }
+
+      strong {
+      	font-weight: inherit;
+      }
+
+      svg {
+      	max-height: 100%;
+      }
+
+      [tabindex="-1"]:focus {
+      	outline: none !important;
+      }
+    </style>
+
+    <title>Zendesk App Builder</title>
+    <script type="importmap">
+      {"imports":{"react":"https://static.zdassets.com/app_builder/react@18.js","react-dom":"https://static.zdassets.com/app_builder/react-dom@18.js","react-dom/client":"https://static.zdassets.com/app_builder/react-dom@18/client.js","styled-components":"https://static.zdassets.com/app_builder/styled-components@6.x.js","pdfjs-dist":"https://static.zdassets.com/app_builder/pdfjs-dist@4.10.38.js","tesseract.js":"https://static.zdassets.com/app_builder/tesseract.js@6.0.0.js","@zendeskgarden/react-theming":"https://static.zdassets.com/app_builder/@zendeskgarden/react-theming@9.x.js","@zendeskgarden/react-buttons":"https://static.zdassets.com/app_builder/@zendeskgarden/react-buttons@9.x.js","@zendeskgarden/react-grid":"https://static.zdassets.com/app_builder/@zendeskgarden/react-grid@9.x.js","@zendeskgarden/react-forms":"https://static.zdassets.com/app_builder/@zendeskgarden/react-forms@9.x.js","@zendeskgarden/react-tables":"https://static.zdassets.com/app_builder/@zendeskgarden/react-tables@9.x.js","@zendeskgarden/react-typography":"https://static.zdassets.com/app_builder/@zendeskgarden/react-typography@9.x.js","@zendeskgarden/react-loaders":"https://static.zdassets.com/app_builder/@zendeskgarden/react-loaders@9.x.js","@zendeskgarden/react-tags":"https://static.zdassets.com/app_builder/@zendeskgarden/react-tags@9.x.js","@zendeskgarden/react-tabs":"https://static.zdassets.com/app_builder/@zendeskgarden/react-tabs@9.x.js","@zendeskgarden/react-accordions":"https://static.zdassets.com/app_builder/@zendeskgarden/react-accordions@9.x.js","@zendeskgarden/react-tooltips":"https://static.zdassets.com/app_builder/@zendeskgarden/react-tooltips@9.x.js","@zendeskgarden/react-modals":"https://static.zdassets.com/app_builder/@zendeskgarden/react-modals@9.x.js","@zendeskgarden/react-notifications":"https://static.zdassets.com/app_builder/@zendeskgarden/react-notifications@9.x.js","@zendeskgarden/react-pagination":"https://static.zdassets.com/app_builder/@zendeskgarden/react-pagination@9.x.js","@zendeskgarden/react-dropdowns":"https://static.zdassets.com/app_builder/@zendeskgarden/react-dropdowns@9.x.js","@zendeskgarden/react-avatars":"https://static.zdassets.com/app_builder/@zendeskgarden/react-avatars@9.x.js","@zendeskgarden/react-breadcrumbs":"https://static.zdassets.com/app_builder/@zendeskgarden/react-breadcrumbs@9.x.js","@zendeskgarden/react-chrome":"https://static.zdassets.com/app_builder/@zendeskgarden/react-chrome@9.x.js","@zendeskgarden/react-colorpickers":"https://static.zdassets.com/app_builder/@zendeskgarden/react-colorpickers@9.x.js","@zendeskgarden/react-datepickers":"https://static.zdassets.com/app_builder/@zendeskgarden/react-datepickers@9.x.js","@zendeskgarden/react-draggable":"https://static.zdassets.com/app_builder/@zendeskgarden/react-draggable@9.x.js","recharts":"https://static.zdassets.com/app_builder/recharts@3.2.1.js"}}
+    </script>
+    <script
+      type="text/javascript"
+      src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/javascript">
+      window.zafClient = ZAFClient.init();
+
+      window?.zafClient?.invoke('resize', { width: '100%', height: '550px' });
+    </script>
+
+    <script type="module">
+          var __defProp = Object.defineProperty;
+      var __defProps = Object.defineProperties;
+      var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+      var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+      var __hasOwnProp = Object.prototype.hasOwnProperty;
+      var __propIsEnum = Object.prototype.propertyIsEnumerable;
+      var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+      var __spreadValues = (a, b) => {
+        for (var prop in b || (b = {}))
+          if (__hasOwnProp.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        if (__getOwnPropSymbols)
+          for (var prop of __getOwnPropSymbols(b)) {
+            if (__propIsEnum.call(b, prop))
+              __defNormalProp(a, prop, b[prop]);
+          }
+        return a;
+      };
+      var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+      var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+      var __async = (__this, __arguments, generator) => {
+        return new Promise((resolve, reject) => {
+          var fulfilled = (value) => {
+            try {
+              step(generator.next(value));
+            } catch (e) {
+              reject(e);
+            }
+          };
+          var rejected = (value) => {
+            try {
+              step(generator.throw(value));
+            } catch (e) {
+              reject(e);
+            }
+          };
+          var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+          step((generator = generator.apply(__this, __arguments)).next());
+        });
+      };
+
+      // vfs:index.jsx
+      import { createRoot } from "react-dom/client";
+      import React5, { useState as useState3, useEffect as useEffect3 } from "react";
+      import styled2 from "styled-components";
+      import { ThemeProvider, DEFAULT_THEME, getColor as getColor2 } from "@zendeskgarden/react-theming";
+
+      // vfs:App.jsx
+      import React4, { useState as useState2, useEffect as useEffect2, useCallback as useCallback3, useMemo } from "react";
+      import { Button as Button3 } from "@zendeskgarden/react-buttons";
+      import { Alert as Alert2 } from "@zendeskgarden/react-notifications";
+      import { Spinner as Spinner2 } from "@zendeskgarden/react-loaders";
+
+      // vfs:components/PDFSourceSelector.jsx
+      import React, { useCallback } from "react";
+      import { Tabs } from "@zendeskgarden/react-tabs";
+      import { Field, FileUpload, Input } from "@zendeskgarden/react-forms";
+      import { Button } from "@zendeskgarden/react-buttons";
+
+      // vfs:styles/App.styles.js
+      import styled from "styled-components";
+      import { getColor } from "@zendeskgarden/react-theming";
+      var AppContainer = styled.div`
+        padding: 12px;
+        width: 100%;
+        box-sizing: border-box;
+      `;
+      var CenteredBox = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+      `;
+      var SectionSpacer = styled.div`
+        height: 12px;
+      `;
+      var SectionTitle = styled.h4`
+        margin: 0 0 8px 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: ${(p) => getColor({ theme: p.theme, variable: "foreground.default" })};
+      `;
+      var SubText = styled.p`
+        margin: 0 0 8px 0;
+        font-size: 12px;
+        color: ${(p) => getColor({ theme: p.theme, variable: "foreground.subtle" })};
+      `;
+      var ButtonRow = styled.div`
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      `;
+      var CanvasWrapper = styled.div`
+        position: relative;
+        display: inline-block;
+        cursor: crosshair;
+        border: 1px solid ${(p) => getColor({ theme: p.theme, variable: "border.default" })};
+        border-radius: 4px;
+        overflow: hidden;
+        width: 100%;
+      `;
+      var StampOverlay = styled.div`
+        position: absolute;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        border-radius: 2px;
+        padding: 3px 5px;
+        font-size: ${(p) => p.fontSize || 10}px;
+        line-height: 1.4;
+        opacity: ${(p) => p.opacity || 0.85};
+        white-space: nowrap;
+        color: #000;
+        max-width: 240px;
+        word-break: break-word;
+        white-space: pre-wrap;
+      `;
+      var PageNavRow = styled.div`
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        justify-content: center;
+      `;
+      var PageLabel = styled.span`
+        font-size: 12px;
+        color: ${(p) => getColor({ theme: p.theme, variable: "foreground.subtle" })};
+      `;
+      var ControlRow = styled.div`
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      `;
+      var ControlLabel = styled.label`
+        font-size: 12px;
+        min-width: 70px;
+        color: ${(p) => getColor({ theme: p.theme, variable: "foreground.default" })};
+      `;
+      var AttachmentList = styled.div`
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 8px;
+      `;
+      var AttachmentItem = styled.button`
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border: 1px solid ${(p) => getColor({ theme: p.theme, variable: "border.default" })};
+        border-radius: 4px;
+        background: ${(p) => getColor({ theme: p.theme, variable: "background.default" })};
+        cursor: pointer;
+        text-align: left;
+        font-size: 12px;
+        color: ${(p) => getColor({ theme: p.theme, variable: "foreground.default" })};
+        transition: background 0.15s;
+
+        &:hover {
+          background: ${(p) => getColor({ theme: p.theme, variable: "background.subtle" })};
+        }
+      `;
+      var StampInfoBox = styled.div`
+        background: ${(p) => getColor({ theme: p.theme, variable: "background.subtle" })};
+        border-radius: 4px;
+        padding: 8px 10px;
+        margin-bottom: 10px;
+        font-size: 12px;
+        color: ${(p) => getColor({ theme: p.theme, variable: "foreground.subtle" })};
+      `;
+      var FormRow = styled.div`
+        margin-bottom: 10px;
+      `;
+      var ControlSelectWrapper = styled.div`
+        flex: 1;
+      `;
+      var NotesWrapper = styled.div`
+        margin-bottom: 10px;
+      `;
+      var SplitRow = styled.div`
+        margin-bottom: 8px;
+      `;
+      var SplitCodeBlock = styled.div`
+        border: 1px solid ${(p) => getColor({ theme: p.theme, variable: "border.default" })};
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 10px;
+      `;
+      var SplitCodeTitle = styled.div`
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: ${(p) => getColor({ theme: p.theme, variable: "foreground.default" })};
+      `;
+      var RequesterOverrideRow = styled.div`
+        margin-bottom: 10px;
+        padding: 8px 10px;
+        border: 1px solid ${(p) => getColor({ theme: p.theme, variable: "border.default" })};
+        border-radius: 6px;
+        background: ${(p) => getColor({ theme: p.theme, variable: "background.subtle" })};
+      `;
+
+      // vfs:components/PDFSourceSelector.jsx
+      function PDFSourceSelector({ ticketData, activeTab, onTabChange, onPdfSelected, onError }) {
+        const handleFileChange = useCallback((e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          if (file.type !== "application/pdf") {
+            onError("Only PDF files are supported.");
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            onPdfSelected(file, ev.target.result);
+          };
+          reader.onerror = () => onError("Failed to read the selected file.");
+          reader.readAsDataURL(file);
+        }, [onPdfSelected, onError]);
+        const handleAttachmentSelect = useCallback((attachment) => __async(this, null, function* () {
+          try {
+            const response = yield fetch(attachment.content_url);
+            if (!response.ok) throw new Error("Failed to fetch attachment");
+            const blob = yield response.blob();
+            const file = new File([blob], attachment.file_name, { type: "application/pdf" });
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              onPdfSelected(file, ev.target.result);
+            };
+            reader.onerror = () => onError("Failed to read attachment.");
+            reader.readAsDataURL(file);
+          } catch (e) {
+            onError("Failed to load attachment: " + (e.message || JSON.stringify(e)));
+          }
+        }), [onPdfSelected, onError]);
+        const attachments = ticketData ? ticketData.attachments || [] : [];
+        return React.createElement("div", null, React.createElement(SectionTitle, null, "Select PDF to Stamp"), React.createElement(Tabs, { selectedItem: activeTab, onChange: onTabChange }, React.createElement(Tabs.TabList, { "aria-label": "PDF source" }, React.createElement(Tabs.Tab, { item: "upload" }, "Upload PDF"), React.createElement(Tabs.Tab, { item: "attachments", isDisabled: attachments.length === 0 }, "Ticket Attachments ", attachments.length > 0 ? `(${attachments.length})` : "")), React.createElement(Tabs.TabPanel, { item: "upload" }, React.createElement("div", { style: { marginTop: 12 } }, React.createElement(Field, null, React.createElement(Field.Label, null, "Upload a PDF file"), React.createElement(Field.Hint, null, "Select a PDF from your computer to stamp"), React.createElement(FileUpload, null, React.createElement(
+          Input,
+          {
+            type: "file",
+            accept: "application/pdf",
+            onChange: handleFileChange
+          }
+        ))))), React.createElement(Tabs.TabPanel, { item: "attachments" }, React.createElement("div", { style: { marginTop: 12 } }, attachments.length === 0 ? React.createElement(SubText, null, "No PDF attachments found on this ticket.") : React.createElement(React.Fragment, null, React.createElement(SubText, null, "Select a PDF attachment from this ticket:"), React.createElement(AttachmentList, null, attachments.map((att) => React.createElement(
+          AttachmentItem,
+          {
+            key: att.id,
+            onClick: () => handleAttachmentSelect(att),
+            type: "button"
+          },
+          React.createElement("span", null, "📄"),
+          React.createElement("span", null, att.file_name),
+          React.createElement("span", { style: { marginLeft: "auto", fontSize: 11, opacity: 0.6 } }, att.size ? `${Math.round(att.size / 1024)} KB` : "")
+        ))))))));
+      }
+
+      // vfs:components/PDFStampEditor.jsx
+      import React2, { useEffect, useRef, useState, useCallback as useCallback2 } from "react";
+      import { Button as Button2 } from "@zendeskgarden/react-buttons";
+      import { Spinner } from "@zendeskgarden/react-loaders";
+
+      // vfs:utils/pdfStamper.js
+      import * as pdfjsLib from "pdfjs-dist";
+
+      // vfs:utils/ticketData.js
+      var COST_CENTRE_FIELD_ID = 5361731296927;
+      function fetchTicketData(customFieldIds) {
+        return __async(this, null, function* () {
+          const [ticketRes, currentUserRes, requestorRes, ticketFieldsRes] = yield Promise.all([
+            window.zafClient.get("ticket"),
+            window.zafClient.get("currentUser"),
+            window.zafClient.get("ticket.requester"),
+            window.zafClient.get("ticketFields")
+          ]);
+          const ticket = ticketRes.ticket;
+          const currentUser = currentUserRes.currentUser;
+          const requester = requestorRes["ticket.requester"];
+          const ticketFields = ticketFieldsRes.ticketFields || [];
+          const customFieldIdStrings = customFieldIds.map((id) => String(id));
+          const fieldMetaMap = {};
+          if (Array.isArray(ticketFields)) {
+            ticketFields.forEach((f) => {
+              if (f && f.name && f.name.startsWith("custom_field_")) {
+                const idStr = f.name.replace("custom_field_", "");
+                if (customFieldIdStrings.includes(idStr)) {
+                  fieldMetaMap[idStr] = {
+                    name: f.name,
+                    label: f.label || f.name,
+                    options: f.options || []
+                  };
+                }
+              }
+            });
+          }
+          const customFieldValues = {};
+          yield Promise.all(
+            customFieldIds.map((id) => __async(this, null, function* () {
+              const idStr = String(id);
+              const meta = fieldMetaMap[idStr];
+              if (!meta) return;
+              try {
+                const res = yield window.zafClient.get(`ticket.customField:${meta.name}`);
+                const val = res[`ticket.customField:${meta.name}`];
+                if (val !== null && val !== void 0 && val !== "") {
+                  customFieldValues[idStr] = { label: meta.label, value: val };
+                }
+              } catch (e) {
+              }
+            }))
+          );
+          let attachments = [];
+          try {
+            const ticketId = ticket.id;
+            if (ticketId) {
+              const commentsRes = yield window.zafClient.request({
+                url: `/api/v2/tickets/${ticketId}/comments.json`,
+                type: "GET"
+              });
+              const comments = commentsRes.comments || [];
+              comments.forEach((comment) => {
+                if (comment.attachments && comment.attachments.length > 0) {
+                  comment.attachments.forEach((att) => {
+                    if (att.content_type === "application/pdf") {
+                      attachments.push(att);
+                    }
+                  });
+                }
+              });
+            }
+          } catch (e) {
+          }
+          const costCentreMeta = fieldMetaMap[String(COST_CENTRE_FIELD_ID)] || null;
+          const costCentreOptions = costCentreMeta ? costCentreMeta.options : [];
+          const costCentreFieldName = costCentreMeta ? costCentreMeta.name : null;
+          return {
+            ticketId: ticket.id,
+            requesterName: requester ? requester.name : "",
+            agentName: currentUser ? currentUser.name : "",
+            customFields: customFieldValues,
+            attachments,
+            costCentreOptions,
+            costCentreFieldName
+          };
+        });
+      }
+
+      // vfs:constants.js
+      var CUSTOM_FIELD_IDS = [
+        4850614726431,
+        5112618319903,
+        4922801016095,
+        4845512973727,
+        5361731296927,
+        5014173804959
+      ];
+      var DRIVER_NAME_FIELD_ID = 5014173804959;
+      var STEPS = {
+        SELECT: "select",
+        STAMP: "stamp"
+      };
+      var STAMP_FONT_SIZE_MIN = 6;
+      var STAMP_FONT_SIZE_MAX = 20;
+      var PDF_PREVIEW_WIDTH = 280;
+
+      // vfs:utils/pdfStamper.js
+      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+      function renderPdfPageToCanvas(pdfDataUrl, pageNumber, scale) {
+        return __async(this, null, function* () {
+          const loadingTask = pdfjsLib.getDocument(pdfDataUrl);
+          const pdf = yield loadingTask.promise;
+          const page = yield pdf.getPage(pageNumber);
+          const viewport = page.getViewport({ scale });
+          const canvas = document.createElement("canvas");
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          const ctx = canvas.getContext("2d");
+          yield page.render({ canvasContext: ctx, viewport }).promise;
+          return { canvas, viewport, totalPages: pdf.numPages };
+        });
+      }
+      function buildStampLines(ticketData, extras = {}) {
+        const {
+          notes = "",
+          splitEnabled = false,
+          splitCostCentreValue = "",
+          code1Amount = "",
+          code1Notes = "",
+          code2Amount = "",
+          code2Notes = ""
+        } = extras;
+        const costCentreIdStr = COST_CENTRE_FIELD_ID ? String(COST_CENTRE_FIELD_ID) : null;
+        const driverNameIdStr = DRIVER_NAME_FIELD_ID ? String(DRIVER_NAME_FIELD_ID) : null;
+        const customFields = ticketData.customFields || {};
+        const costCentreLabel = customFields[costCentreIdStr] && customFields[costCentreIdStr].label || "Cost Centre";
+        const lines = [];
+        const today = /* @__PURE__ */ new Date();
+        const dateStr = today.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
+        lines.push(`Date: ${dateStr}`);
+        if (ticketData.requesterName) lines.push(`Requester: ${ticketData.requesterName}`);
+        if (driverNameIdStr && customFields[driverNameIdStr] && customFields[driverNameIdStr].value) {
+          lines.push(`Driver Name: ${customFields[driverNameIdStr].value}`);
+        }
+        if (ticketData.ticketId) lines.push(`Ticket ID: #${ticketData.ticketId}`);
+        Object.entries(customFields).forEach(([key, field]) => {
+          if (field && field.value) {
+            if (driverNameIdStr && key === driverNameIdStr) return;
+            if (splitEnabled && costCentreIdStr && key === costCentreIdStr) return;
+            lines.push(`${field.label}: ${field.value}`);
+          }
+        });
+        if (ticketData.agentName) lines.push(`Agent: ${ticketData.agentName}`);
+        if (!splitEnabled) {
+          if (notes && notes.trim()) lines.push(`Notes: ${notes.trim()}`);
+          return lines;
+        }
+        const code1Value = customFields[costCentreIdStr] && customFields[costCentreIdStr].value || "—";
+        lines.push("");
+        lines.push(`Code 1 — ${costCentreLabel}: ${code1Value}`);
+        if (code1Amount && code1Amount.trim()) lines.push(`  Amount: ${code1Amount.trim()}`);
+        if (code1Notes && code1Notes.trim()) lines.push(`  Notes: ${code1Notes.trim()}`);
+        lines.push("");
+        lines.push(`Code 2 — ${costCentreLabel}: ${splitCostCentreValue || "—"}`);
+        if (code2Amount && code2Amount.trim()) lines.push(`  Amount: ${code2Amount.trim()}`);
+        if (code2Notes && code2Notes.trim()) lines.push(`  Notes: ${code2Notes.trim()}`);
+        return lines;
+      }
+      function isPdfEncrypted(arrayBuffer) {
+        try {
+          const bytes = new Uint8Array(arrayBuffer);
+          const tail = bytes.slice(Math.max(0, bytes.length - 2048));
+          const text = new TextDecoder("latin1").decode(tail);
+          return text.includes("/Encrypt");
+        } catch (e) {
+          return false;
+        }
+      }
+      function flattenPdfViaCanvas(pdfDataUrl, PDFDocument, rgb) {
+        return __async(this, null, function* () {
+          const loadingTask = pdfjsLib.getDocument(pdfDataUrl);
+          const pdfJs = yield loadingTask.promise;
+          const numPages = pdfJs.numPages;
+          const newDoc = yield PDFDocument.create();
+          for (let i = 1; i <= numPages; i++) {
+            const pjsPage = yield pdfJs.getPage(i);
+            const viewport = pjsPage.getViewport({ scale: 2 });
+            const canvas = document.createElement("canvas");
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            const ctx = canvas.getContext("2d");
+            yield pjsPage.render({ canvasContext: ctx, viewport }).promise;
+            const pngDataUrl = canvas.toDataURL("image/png");
+            const pngBytes = yield fetch(pngDataUrl).then((r) => r.arrayBuffer());
+            const pngImage = yield newDoc.embedPng(pngBytes);
+            const { width: ptW, height: ptH } = pjsPage.getViewport({ scale: 1 });
+            const newPage = newDoc.addPage([ptW, ptH]);
+            newPage.drawImage(pngImage, { x: 0, y: 0, width: ptW, height: ptH });
+          }
+          return newDoc;
+        });
+      }
+      function stampPdf(_0, _1, _2, _3, _4) {
+        return __async(this, arguments, function* (pdfFile, stampPosition, stampPage, stampSettings, ticketData, extras = {}) {
+          const { PDFDocument, rgb, StandardFonts } = yield import("https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.esm.js");
+          const arrayBuffer = yield pdfFile.arrayBuffer();
+          const encrypted = isPdfEncrypted(arrayBuffer);
+          let pdfDoc;
+          if (encrypted) {
+            const dataUrl = yield new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(new Blob([arrayBuffer], { type: "application/pdf" }));
+            });
+            pdfDoc = yield flattenPdfViaCanvas(dataUrl, PDFDocument, rgb);
+          } else {
+            pdfDoc = yield PDFDocument.load(arrayBuffer);
+          }
+          const pages = pdfDoc.getPages();
+          const pageIndex = stampPage - 1;
+          if (pageIndex < 0 || pageIndex >= pages.length) {
+            throw new Error("Invalid page number for stamping");
+          }
+          const page = pages[pageIndex];
+          const { width: pageWidth, height: pageHeight } = page.getSize();
+          const font = yield pdfDoc.embedFont(StandardFonts.Helvetica);
+          const lines = buildStampLines(ticketData, extras);
+          const fontSize = stampSettings.fontSize || 10;
+          const opacity = stampSettings.opacity !== void 0 ? stampSettings.opacity : 0.85;
+          const { x: canvasX, y: canvasY, canvasWidth, canvasHeight } = stampPosition;
+          const scaleX = pageWidth / canvasWidth;
+          const scaleY = pageHeight / canvasHeight;
+          const pdfX = canvasX * scaleX;
+          const pdfY = pageHeight - canvasY * scaleY;
+          let boxWidthPdf = null;
+          if (stampPosition.boxWidth && stampPosition.boxWidth > 0) {
+            boxWidthPdf = stampPosition.boxWidth * scaleX;
+          }
+          drawStampBlock(page, lines, pdfX, pdfY, font, fontSize, opacity, rgb, boxWidthPdf);
+          const pdfBytes = yield pdfDoc.save({ useObjectStreams: false });
+          return new Blob([pdfBytes], { type: "application/pdf" });
+        });
+      }
+      function drawStampBlock(page, lines, x, y, font, requestedFontSize, opacity, rgb, boxWidthPdf) {
+        const padding = 4;
+        const maxBoxWidth = boxWidthPdf ? boxWidthPdf : null;
+        const wrappedLines = wrapLines(lines, font, requestedFontSize, maxBoxWidth ? maxBoxWidth - padding * 2 : null);
+        let fontSize = requestedFontSize;
+        if (maxBoxWidth) {
+          const maxTextWidth = maxBoxWidth - padding * 2;
+          const longestWidth = Math.max(...wrappedLines.map((l) => font.widthOfTextAtSize(l, fontSize)));
+          if (longestWidth > maxTextWidth && longestWidth > 0) {
+            fontSize = fontSize * (maxTextWidth / longestWidth);
+            fontSize = Math.max(fontSize, 4);
+          }
+        }
+        const lineHeight = fontSize * 1.4;
+        const boxWidth = maxBoxWidth || Math.max(...wrappedLines.map((l) => font.widthOfTextAtSize(l, fontSize))) + padding * 2;
+        const boxHeight = wrappedLines.length * lineHeight + padding * 2;
+        page.drawRectangle({
+          x,
+          y: y - boxHeight,
+          width: boxWidth,
+          height: boxHeight,
+          color: rgb(1, 1, 1),
+          opacity: opacity * 0.7,
+          borderColor: rgb(0.2, 0.2, 0.2),
+          borderWidth: 0.5,
+          borderOpacity: opacity
+        });
+        wrappedLines.forEach((line, i) => {
+          page.drawText(line, {
+            x: x + padding,
+            y: y - padding - (i + 1) * lineHeight + (lineHeight - fontSize),
+            size: fontSize,
+            font,
+            color: rgb(0, 0, 0),
+            opacity
+          });
+        });
+      }
+      function wrapLines(lines, font, fontSize, maxWidth) {
+        if (!maxWidth || maxWidth <= 0) return lines;
+        const result = [];
+        lines.forEach((line) => {
+          if (line === "") {
+            result.push("");
+            return;
+          }
+          if (font.widthOfTextAtSize(line, fontSize) <= maxWidth) {
+            result.push(line);
+            return;
+          }
+          const words = line.split(" ");
+          let current = "";
+          words.forEach((word) => {
+            const test = current ? current + " " + word : word;
+            if (font.widthOfTextAtSize(test, fontSize) <= maxWidth) {
+              current = test;
+            } else {
+              if (current) result.push(current);
+              current = word;
+            }
+          });
+          if (current) result.push(current);
+        });
+        return result;
+      }
+
+      // vfs:components/PDFStampEditor.jsx
+      function PDFStampEditor({
+        pdfDataUrl,
+        ticketData,
+        stampPosition,
+        stampPage,
+        stampSettings,
+        onStampPlaced,
+        stampExtras
+      }) {
+        const canvasRef = useRef(null);
+        const wrapperRef = useRef(null);
+        const [currentPage, setCurrentPage] = useState(stampPage || 1);
+        const [totalPages, setTotalPages] = useState(1);
+        const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+        const [loading, setLoading] = useState(true);
+        const [renderError, setRenderError] = useState(null);
+        const dragStart = useRef(null);
+        const [dragging, setDragging] = useState(false);
+        const [dragRect, setDragRect] = useState(null);
+        const renderPage = useCallback2((page) => __async(this, null, function* () {
+          setLoading(true);
+          setRenderError(null);
+          try {
+            const containerWidth = wrapperRef.current ? wrapperRef.current.offsetWidth || PDF_PREVIEW_WIDTH : PDF_PREVIEW_WIDTH;
+            const tempResult = yield renderPdfPageToCanvas(pdfDataUrl, page, 1);
+            const naturalWidth = tempResult.viewport.width;
+            const scale = containerWidth / naturalWidth;
+            const result = yield renderPdfPageToCanvas(pdfDataUrl, page, scale);
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            canvas.width = result.canvas.width;
+            canvas.height = result.canvas.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(result.canvas, 0, 0);
+            setCanvasSize({ width: result.canvas.width, height: result.canvas.height });
+            setTotalPages(result.totalPages);
+          } catch (e) {
+            setRenderError("Failed to render PDF: " + (e.message || JSON.stringify(e)));
+          } finally {
+            setLoading(false);
+          }
+        }), [pdfDataUrl]);
+        useEffect(() => {
+          renderPage(currentPage);
+        }, [currentPage, renderPage]);
+        const getCanvasCoords = useCallback2((e) => {
+          const canvas = canvasRef.current;
+          if (!canvas) return { x: 0, y: 0 };
+          const rect = canvas.getBoundingClientRect();
+          const scaleX = canvas.width / rect.width;
+          const scaleY = canvas.height / rect.height;
+          return {
+            x: (e.clientX - rect.left) * scaleX,
+            y: (e.clientY - rect.top) * scaleY
+          };
+        }, []);
+        const handleMouseDown = useCallback2((e) => {
+          e.preventDefault();
+          const coords = getCanvasCoords(e);
+          dragStart.current = coords;
+          setDragging(true);
+          setDragRect({ x: coords.x, y: coords.y, w: 0, h: 0 });
+        }, [getCanvasCoords]);
+        const handleMouseMove = useCallback2((e) => {
+          if (!dragging || !dragStart.current) return;
+          e.preventDefault();
+          const coords = getCanvasCoords(e);
+          const x = Math.min(coords.x, dragStart.current.x);
+          const y = Math.min(coords.y, dragStart.current.y);
+          const w = Math.abs(coords.x - dragStart.current.x);
+          const h = Math.abs(coords.y - dragStart.current.y);
+          setDragRect({ x, y, w, h });
+        }, [dragging, getCanvasCoords]);
+        const handleMouseUp = useCallback2((e) => {
+          if (!dragging || !dragStart.current) return;
+          e.preventDefault();
+          setDragging(false);
+          const canvas = canvasRef.current;
+          if (!canvas) return;
+          const coords = getCanvasCoords(e);
+          const x = Math.min(coords.x, dragStart.current.x);
+          const y = Math.min(coords.y, dragStart.current.y);
+          const w = Math.abs(coords.x - dragStart.current.x);
+          const h = Math.abs(coords.y - dragStart.current.y);
+          dragStart.current = null;
+          if (w < 20 || h < 10) {
+            setDragRect(null);
+            return;
+          }
+          setDragRect({ x, y, w, h });
+          onStampPlaced(
+            {
+              x,
+              y,
+              boxWidth: w,
+              boxHeight: h,
+              canvasWidth: canvas.width,
+              canvasHeight: canvas.height
+            },
+            currentPage
+          );
+        }, [dragging, getCanvasCoords, onStampPlaced, currentPage]);
+        useEffect(() => {
+          if (!stampPosition || !stampPosition.boxWidth) {
+            setDragRect(null);
+          }
+        }, [stampPosition]);
+        const overlayLines = ticketData ? buildStampLines(ticketData, stampExtras || {}) : [];
+        const stampText = overlayLines.join("\n");
+        const overlayStyle = (() => {
+          if (!stampPosition || !stampPosition.canvasWidth || canvasSize.width === 0) return null;
+          const scaleX = canvasSize.width / stampPosition.canvasWidth;
+          const scaleY = canvasSize.height / stampPosition.canvasHeight;
+          const displayScaleX = canvasRef.current ? canvasRef.current.getBoundingClientRect().width / canvasSize.width : 1;
+          const displayScaleY = canvasRef.current ? canvasRef.current.getBoundingClientRect().height / canvasSize.height : 1;
+          const left = stampPosition.x * scaleX * displayScaleX;
+          const top = stampPosition.y * scaleY * displayScaleY;
+          if (stampPosition.boxWidth) {
+            return {
+              left,
+              top,
+              width: stampPosition.boxWidth * scaleX * displayScaleX,
+              minHeight: stampPosition.boxHeight * scaleY * displayScaleY,
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+              overflowWrap: "break-word"
+            };
+          }
+          return { left, top };
+        })();
+        const dragPreviewStyle = dragging && dragRect ? {
+          position: "absolute",
+          left: dragRect.x * (canvasRef.current ? canvasRef.current.getBoundingClientRect().width / canvasSize.width : 1),
+          top: dragRect.y * (canvasRef.current ? canvasRef.current.getBoundingClientRect().height / canvasSize.height : 1),
+          width: dragRect.w * (canvasRef.current ? canvasRef.current.getBoundingClientRect().width / canvasSize.width : 1),
+          height: dragRect.h * (canvasRef.current ? canvasRef.current.getBoundingClientRect().height / canvasSize.height : 1),
+          border: "2px dashed #1f73b7",
+          background: "rgba(31,115,183,0.08)",
+          pointerEvents: "none",
+          boxSizing: "border-box"
+        } : null;
+        return React2.createElement("div", null, React2.createElement(SectionTitle, null, "Position the Stamp"), React2.createElement(SubText, null, "Drag on the PDF to draw the stamp box. The text will wrap to fit."), renderError && React2.createElement(SubText, { style: { color: "red" } }, renderError), React2.createElement("div", { ref: wrapperRef, style: { width: "100%" } }, React2.createElement(CanvasWrapper, null, loading && React2.createElement(CenteredBox, { style: { minHeight: 120, position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(255,255,255,0.6)", zIndex: 2 } }, React2.createElement(Spinner, { size: 24, "aria-label": "Rendering PDF" })), React2.createElement(
+          "canvas",
+          {
+            ref: canvasRef,
+            onMouseDown: handleMouseDown,
+            onMouseMove: handleMouseMove,
+            onMouseUp: handleMouseUp,
+            onMouseLeave: handleMouseUp,
+            style: { display: "block", width: "100%", cursor: "crosshair", userSelect: "none" }
+          }
+        ), dragPreviewStyle && React2.createElement("div", { style: dragPreviewStyle }), overlayStyle && stampPosition && React2.createElement(
+          StampOverlay,
+          {
+            fontSize: stampSettings.fontSize,
+            opacity: stampSettings.opacity,
+            style: overlayStyle
+          },
+          stampText
+        ))), totalPages > 1 && React2.createElement(PageNavRow, null, React2.createElement(
+          Button2,
+          {
+            size: "small",
+            isBasic: true,
+            disabled: currentPage <= 1,
+            onClick: () => setCurrentPage((p) => Math.max(1, p - 1))
+          },
+          "Prev"
+        ), React2.createElement(PageLabel, null, "Page ", currentPage, " of ", totalPages), React2.createElement(
+          Button2,
+          {
+            size: "small",
+            isBasic: true,
+            disabled: currentPage >= totalPages,
+            onClick: () => setCurrentPage((p) => Math.min(totalPages, p + 1))
+          },
+          "Next"
+        )));
+      }
+
+      // vfs:components/StampControls.jsx
+      import React3 from "react";
+      import { Field as Field2, Range, Select, Textarea, Toggle, Input as Input2 } from "@zendeskgarden/react-forms";
+      import { Alert } from "@zendeskgarden/react-notifications";
+      function StampControls({
+        ticketData,
+        stampSettings,
+        costCentreValue,
+        onCostCentreChange,
+        splitEnabled,
+        onSplitToggle,
+        splitCostCentreValue,
+        onSplitCostCentreChange,
+        code1Amount,
+        onCode1AmountChange,
+        code1Notes,
+        onCode1NotesChange,
+        code2Amount,
+        onCode2AmountChange,
+        code2Notes,
+        onCode2NotesChange,
+        stampNotes,
+        onStampNotesChange,
+        onStampSettingsChange,
+        effectiveTicketData,
+        requesterOverride,
+        onRequesterOverrideChange,
+        requesterOverrideEnabled,
+        onRequesterOverrideToggle
+      }) {
+        const costCentreIdStr = String(COST_CENTRE_FIELD_ID);
+        const costCentreOptions = ticketData && ticketData.costCentreOptions || [];
+        const costCentreAlreadySet = !!(ticketData && ticketData.customFields && ticketData.customFields[costCentreIdStr] && ticketData.customFields[costCentreIdStr].value);
+        const showCode1Selector = !costCentreAlreadySet && costCentreOptions.length > 0;
+        const showSplitControls = costCentreOptions.length > 0;
+        const code1DisplayValue = costCentreAlreadySet ? ticketData.customFields[costCentreIdStr].value : costCentreValue || "—";
+        const handleFontSizeChange = (e) => {
+          onStampSettingsChange(__spreadProps(__spreadValues({}, stampSettings), { fontSize: Number(e.target.value) }));
+        };
+        const handleOpacityChange = (e) => {
+          onStampSettingsChange(__spreadProps(__spreadValues({}, stampSettings), { opacity: Number(e.target.value) / 100 }));
+        };
+        const buildExtras = () => ({
+          splitEnabled,
+          splitCostCentreValue,
+          code1Amount,
+          code1Notes,
+          code2Amount,
+          code2Notes,
+          notes: splitEnabled ? "" : stampNotes
+        });
+        const stampLines = effectiveTicketData ? buildStampLines(effectiveTicketData, buildExtras()) : [];
+        const defaultRequesterName = ticketData && ticketData.requesterName || "";
+        return React3.createElement("div", null, React3.createElement(SectionTitle, null, "Stamp Settings"), React3.createElement(RequesterOverrideRow, null, React3.createElement(Field2, null, React3.createElement(
+          Toggle,
+          {
+            checked: requesterOverrideEnabled,
+            onChange: (e) => onRequesterOverrideToggle(e.target.checked)
+          },
+          React3.createElement(Field2.Label, { isRegular: true }, "Override requester name")
+        )), requesterOverrideEnabled && React3.createElement(Field2, { style: { marginTop: 6 } }, React3.createElement(Field2.Label, { isHidden: true }, "Requester name override"), React3.createElement(
+          Input2,
+          {
+            value: requesterOverride,
+            onChange: (e) => onRequesterOverrideChange(e.target.value),
+            placeholder: defaultRequesterName || "Enter requester name...",
+            isCompact: true
+          }
+        ))), React3.createElement(StampInfoBox, null, React3.createElement("strong", null, "Stamp preview:"), stampLines.length > 0 ? stampLines.map((line, i) => React3.createElement("div", { key: i }, line === "" ? React3.createElement("br", null) : line)) : React3.createElement("div", null, "No stamp data available")), showCode1Selector && React3.createElement(ControlRow, null, React3.createElement(ControlLabel, null, "Cost Centre"), React3.createElement(ControlSelectWrapper, null, React3.createElement(Field2, null, React3.createElement(Field2.Label, { isHidden: true }, "Invoice Cost Centre"), React3.createElement(
+          Select,
+          {
+            value: costCentreValue,
+            onChange: (e) => onCostCentreChange(e.target.value),
+            isCompact: true
+          },
+          React3.createElement("option", { value: "", disabled: true }, "Select cost centre..."),
+          costCentreOptions.map((opt) => React3.createElement("option", { key: opt.value, value: opt.value }, opt.value))
+        )))), showSplitControls && React3.createElement(SplitRow, null, React3.createElement(Field2, null, React3.createElement(
+          Toggle,
+          {
+            checked: splitEnabled,
+            onChange: (e) => onSplitToggle(e.target.checked)
+          },
+          React3.createElement(Field2.Label, { isRegular: true }, "Split payment between 2 codes")
+        ))), splitEnabled ? React3.createElement(React3.Fragment, null, React3.createElement(SplitCodeBlock, null, React3.createElement(SplitCodeTitle, null, "Code 1: ", code1DisplayValue), React3.createElement(ControlRow, null, React3.createElement(ControlLabel, null, "Amount"), React3.createElement(ControlSelectWrapper, null, React3.createElement(Field2, null, React3.createElement(Field2.Label, { isHidden: true }, "Code 1 amount"), React3.createElement(
+          Input2,
+          {
+            value: code1Amount,
+            onChange: (e) => onCode1AmountChange(e.target.value),
+            placeholder: "e.g. £126",
+            isCompact: true
+          }
+        )))), React3.createElement(Field2, null, React3.createElement(Field2.Label, null, "Notes"), React3.createElement(
+          Textarea,
+          {
+            value: code1Notes,
+            onChange: (e) => onCode1NotesChange(e.target.value),
+            placeholder: "Notes for code 1...",
+            minRows: 2,
+            maxRows: 4,
+            isCompact: true
+          }
+        ))), React3.createElement(SplitCodeBlock, null, React3.createElement(SplitCodeTitle, null, "Code 2"), React3.createElement(ControlRow, null, React3.createElement(ControlLabel, null, "2nd Code"), React3.createElement(ControlSelectWrapper, null, React3.createElement(Field2, null, React3.createElement(Field2.Label, { isHidden: true }, "Second Cost Centre"), React3.createElement(
+          Select,
+          {
+            value: splitCostCentreValue,
+            onChange: (e) => onSplitCostCentreChange(e.target.value),
+            isCompact: true
+          },
+          React3.createElement("option", { value: "", disabled: true }, "Select 2nd code..."),
+          costCentreOptions.map((opt) => React3.createElement("option", { key: opt.value, value: opt.value }, opt.value))
+        )))), React3.createElement(ControlRow, null, React3.createElement(ControlLabel, null, "Amount"), React3.createElement(ControlSelectWrapper, null, React3.createElement(Field2, null, React3.createElement(Field2.Label, { isHidden: true }, "Code 2 amount"), React3.createElement(
+          Input2,
+          {
+            value: code2Amount,
+            onChange: (e) => onCode2AmountChange(e.target.value),
+            placeholder: "e.g. £200",
+            isCompact: true
+          }
+        )))), React3.createElement(Field2, null, React3.createElement(Field2.Label, null, "Notes"), React3.createElement(
+          Textarea,
+          {
+            value: code2Notes,
+            onChange: (e) => onCode2NotesChange(e.target.value),
+            placeholder: "Notes for code 2...",
+            minRows: 2,
+            maxRows: 4,
+            isCompact: true
+          }
+        )))) : React3.createElement("div", { style: { marginBottom: 10 } }, React3.createElement(Field2, null, React3.createElement(Field2.Label, null, "Additional notes"), React3.createElement(
+          Textarea,
+          {
+            value: stampNotes,
+            onChange: (e) => onStampNotesChange(e.target.value),
+            placeholder: "Type any additional notes to appear at the bottom of the stamp...",
+            minRows: 2,
+            maxRows: 5,
+            isCompact: true
+          }
+        ))), React3.createElement(ControlRow, null, React3.createElement(ControlLabel, null, "Font size: ", stampSettings.fontSize, "pt"), React3.createElement(ControlSelectWrapper, null, React3.createElement(Field2, null, React3.createElement(Field2.Label, { isHidden: true }, "Font size"), React3.createElement(
+          Range,
+          {
+            min: STAMP_FONT_SIZE_MIN,
+            max: STAMP_FONT_SIZE_MAX,
+            step: 1,
+            value: stampSettings.fontSize,
+            onChange: handleFontSizeChange
+          }
+        )))), React3.createElement(ControlRow, null, React3.createElement(ControlLabel, null, "Opacity: ", Math.round(stampSettings.opacity * 100), "%"), React3.createElement(ControlSelectWrapper, null, React3.createElement(Field2, null, React3.createElement(Field2.Label, { isHidden: true }, "Opacity"), React3.createElement(
+          Range,
+          {
+            min: 10,
+            max: 100,
+            step: 5,
+            value: Math.round(stampSettings.opacity * 100),
+            onChange: handleOpacityChange
+          }
+        )))));
+      }
+
+      // vfs:App.jsx
+      var App = () => {
+        const [step, setStep] = useState2(STEPS.SELECT);
+        const [ticketData, setTicketData] = useState2(null);
+        const [pdfFile, setPdfFile] = useState2(null);
+        const [pdfDataUrl, setPdfDataUrl] = useState2(null);
+        const [stampPosition, setStampPosition] = useState2(null);
+        const [stampPage, setStampPage] = useState2(1);
+        const [stampSettings, setStampSettings] = useState2({ fontSize: 10, opacity: 0.85 });
+        const [loading, setLoading] = useState2(true);
+        const [error, setError] = useState2(null);
+        const [activeTab, setActiveTab] = useState2("upload");
+        const [costCentreValue, setCostCentreValue] = useState2("");
+        const [splitEnabled, setSplitEnabled] = useState2(false);
+        const [splitCostCentreValue, setSplitCostCentreValue] = useState2("");
+        const [code1Amount, setCode1Amount] = useState2("");
+        const [code1Notes, setCode1Notes] = useState2("");
+        const [code2Amount, setCode2Amount] = useState2("");
+        const [code2Notes, setCode2Notes] = useState2("");
+        const [stampNotes, setStampNotes] = useState2("");
+        const [requesterOverrideEnabled, setRequesterOverrideEnabled] = useState2(false);
+        const [requesterOverride, setRequesterOverride] = useState2("");
+        const [stamping, setStamping] = useState2(false);
+        const [stampSuccess, setStampSuccess] = useState2(false);
+        useEffect2(() => {
+          const load = () => __async(void 0, null, function* () {
+            try {
+              const data = yield fetchTicketData(CUSTOM_FIELD_IDS);
+              setTicketData(data);
+            } catch (e) {
+              setError("Failed to load ticket data: " + JSON.stringify(e));
+            } finally {
+              setLoading(false);
+            }
+          });
+          load();
+          window.zafClient.invoke("resize", { height: "600px", width: "100%" });
+        }, []);
+        const costCentreIdStr = String(COST_CENTRE_FIELD_ID);
+        const effectiveTicketData = useMemo(() => {
+          if (!ticketData) return null;
+          let data = ticketData;
+          const alreadySet = !!(ticketData.customFields && ticketData.customFields[costCentreIdStr] && ticketData.customFields[costCentreIdStr].value);
+          if (!alreadySet && costCentreValue) {
+            const options = ticketData.costCentreOptions || [];
+            const selectedOption = options.find((o) => o.value === costCentreValue);
+            const displayLabel = selectedOption ? selectedOption.value : costCentreValue;
+            data = __spreadProps(__spreadValues({}, data), {
+              customFields: __spreadProps(__spreadValues({}, data.customFields), {
+                [costCentreIdStr]: {
+                  label: "Invoice Cost Centre",
+                  value: displayLabel
+                }
+              })
+            });
+          }
+          if (requesterOverrideEnabled && requesterOverride.trim()) {
+            data = __spreadProps(__spreadValues({}, data), { requesterName: requesterOverride.trim() });
+          }
+          return data;
+        }, [ticketData, costCentreValue, costCentreIdStr, requesterOverrideEnabled, requesterOverride]);
+        const resetStampState = useCallback3(() => {
+          setCostCentreValue("");
+          setSplitEnabled(false);
+          setSplitCostCentreValue("");
+          setCode1Amount("");
+          setCode1Notes("");
+          setCode2Amount("");
+          setCode2Notes("");
+          setStampNotes("");
+          setRequesterOverrideEnabled(false);
+          setRequesterOverride("");
+          setStampSuccess(false);
+        }, []);
+        const handlePdfSelected = useCallback3((file, dataUrl) => {
+          setPdfFile(file);
+          setPdfDataUrl(dataUrl);
+          setStampPosition(null);
+          resetStampState();
+          setStep(STEPS.STAMP);
+        }, [resetStampState]);
+        const handleStampPlaced = useCallback3((pos, page) => {
+          setStampPosition(pos);
+          setStampPage(page);
+        }, []);
+        const stampExtras = useMemo(() => ({
+          splitEnabled,
+          splitCostCentreValue,
+          code1Amount,
+          code1Notes,
+          code2Amount,
+          code2Notes,
+          notes: splitEnabled ? "" : stampNotes
+        }), [splitEnabled, splitCostCentreValue, code1Amount, code1Notes, code2Amount, code2Notes, stampNotes]);
+        const handleApplyStamp = useCallback3(() => __async(void 0, null, function* () {
+          if (!stampPosition) {
+            setError("Drag on the PDF preview to draw the stamp box first.");
+            return;
+          }
+          const costCentreOptions = ticketData && ticketData.costCentreOptions || [];
+          const costCentreAlreadySet = !!(ticketData && ticketData.customFields && ticketData.customFields[costCentreIdStr] && ticketData.customFields[costCentreIdStr].value);
+          const showCode1Selector = !costCentreAlreadySet && costCentreOptions.length > 0;
+          if (showCode1Selector && !costCentreValue) {
+            setError("Select a Cost Centre before applying the stamp.");
+            return;
+          }
+          if (splitEnabled && !splitCostCentreValue) {
+            setError("Select a 2nd Cost Centre code before applying the stamp.");
+            return;
+          }
+          setStamping(true);
+          try {
+            const blob = yield stampPdf(
+              pdfFile,
+              stampPosition,
+              stampPage,
+              stampSettings,
+              effectiveTicketData,
+              stampExtras
+            );
+            const filename = pdfFile ? pdfFile.name.replace(/\.pdf$/i, "_stamped.pdf") : `ticket_${ticketData.ticketId}_stamped.pdf`;
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            if (costCentreValue && ticketData && ticketData.costCentreFieldName) {
+              try {
+                yield window.zafClient.set(
+                  `ticket.customField:${ticketData.costCentreFieldName}`,
+                  costCentreValue
+                );
+                setTicketData((prev) => __spreadProps(__spreadValues({}, prev), {
+                  customFields: __spreadProps(__spreadValues({}, prev.customFields), {
+                    [costCentreIdStr]: {
+                      label: "Invoice Cost Centre",
+                      value: costCentreValue
+                    }
+                  })
+                }));
+              } catch (e) {
+                setError("PDF downloaded but failed to update Cost Centre field: " + JSON.stringify(e));
+              }
+            }
+            setStampSuccess(true);
+          } catch (e) {
+            setError("Failed to stamp PDF: " + (e.message || JSON.stringify(e)));
+          } finally {
+            setStamping(false);
+          }
+        }), [
+          stampPosition,
+          ticketData,
+          costCentreIdStr,
+          costCentreValue,
+          splitEnabled,
+          splitCostCentreValue,
+          pdfFile,
+          stampPage,
+          stampSettings,
+          effectiveTicketData,
+          stampExtras
+        ]);
+        const handleReset = useCallback3(() => {
+          setPdfFile(null);
+          setPdfDataUrl(null);
+          setStampPosition(null);
+          resetStampState();
+          setStep(STEPS.SELECT);
+        }, [resetStampState]);
+        if (loading) {
+          return React4.createElement(AppContainer, null, React4.createElement(CenteredBox, null, React4.createElement(Spinner2, { size: 32, "aria-label": "Loading ticket data" })));
+        }
+        return React4.createElement(AppContainer, null, error && React4.createElement(Alert2, { type: "error" }, React4.createElement(Alert2.Title, null, "Error"), React4.createElement(Alert2.Paragraph, null, error), React4.createElement(Alert2.Close, { "aria-label": "Dismiss error", onClick: () => setError(null) })), step === STEPS.SELECT && React4.createElement(
+          PDFSourceSelector,
+          {
+            ticketData,
+            activeTab,
+            onTabChange: setActiveTab,
+            onPdfSelected: handlePdfSelected,
+            onError: setError
+          }
+        ), step === STEPS.STAMP && pdfDataUrl && React4.createElement(React4.Fragment, null, stampSuccess ? React4.createElement(React4.Fragment, null, React4.createElement(Alert2, { type: "success" }, React4.createElement(Alert2.Title, null, "Done"), React4.createElement(Alert2.Paragraph, null, "The stamped PDF has been downloaded to your device.")), React4.createElement(ButtonRow, null, React4.createElement(Button3, { isPrimary: true, size: "small", onClick: handleReset }, "Stamp Another PDF"))) : React4.createElement(React4.Fragment, null, React4.createElement(
+          StampControls,
+          {
+            ticketData,
+            stampSettings,
+            costCentreValue,
+            onCostCentreChange: setCostCentreValue,
+            splitEnabled,
+            onSplitToggle: setSplitEnabled,
+            splitCostCentreValue,
+            onSplitCostCentreChange: setSplitCostCentreValue,
+            code1Amount,
+            onCode1AmountChange: setCode1Amount,
+            code1Notes,
+            onCode1NotesChange: setCode1Notes,
+            code2Amount,
+            onCode2AmountChange: setCode2Amount,
+            code2Notes,
+            onCode2NotesChange: setCode2Notes,
+            stampNotes,
+            onStampNotesChange: setStampNotes,
+            onStampSettingsChange: setStampSettings,
+            effectiveTicketData,
+            requesterOverride,
+            onRequesterOverrideChange: setRequesterOverride,
+            requesterOverrideEnabled,
+            onRequesterOverrideToggle: setRequesterOverrideEnabled
+          }
+        ), React4.createElement(SectionSpacer, null), React4.createElement(
+          PDFStampEditor,
+          {
+            pdfDataUrl,
+            ticketData: effectiveTicketData,
+            stampPosition,
+            stampPage,
+            stampSettings,
+            onStampPlaced: handleStampPlaced,
+            stampExtras
+          }
+        ), React4.createElement(ButtonRow, null, React4.createElement(Button3, { isBasic: true, size: "small", onClick: handleReset, disabled: stamping }, "Back"), React4.createElement(
+          Button3,
+          {
+            isPrimary: true,
+            size: "small",
+            onClick: handleApplyStamp,
+            disabled: !stampPosition || stamping
+          },
+          stamping ? React4.createElement(Spinner2, { size: 14, "aria-label": "Stamping PDF" }) : "Stamp & Download"
+        )), !stampPosition && React4.createElement(SubText, null, "Drag on the PDF above to draw the stamp box."), stampPosition && React4.createElement(SubText, null, "Stamp box drawn on page ", stampPage, ". Drag again to reposition or resize."))));
+      };
+      var App_default = App;
+
+      // vfs:index.jsx
+      var INITIAL_APP_HEIGHT = "550px";
+      var INITIAL_APP_WIDTH = "100%";
+      var COPY_SUCCESS_TIMEOUT = 2e3;
+      var queryParams = new URLSearchParams(location.search);
+      var colorScheme = queryParams.get("colorScheme");
+      var AppWrapper = styled2.div`
+        background-color: ${(p) => getColor2({ theme: p.theme, variable: "background.default" })};
+        min-height: 100vh;
+      `;
+      var ErrorContainer = styled2.div`
+        font-size: 16px;
+        display: grid;
+        height: 100vh;
+        width: 100vw;
+        place-content: center;
+        padding: 20px;
+        text-align: center;
+      `;
+      var ErrorTitle = styled2.h4`
+        margin-bottom: 8px;
+        color: #d93f4c;
+      `;
+      var ErrorMessage = styled2.p`
+        margin-bottom: 16px;
+        color: #49545c;
+        max-width: 500px;
+      `;
+      var ErrorPre = styled2.pre`
+        background: #f8f9f9;
+        padding: 16px;
+        border-radius: 4px;
+        max-width: 600px;
+        overflow: auto;
+        text-align: left;
+        white-space: pre-wrap;
+      `;
+      var CopyButton = styled2.button`
+        margin-top: 16px;
+        padding: 8px 16px;
+        border: 1px solid #c1c3c5;
+        border-radius: 4px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        &:hover {
+          background: #f8f9f9;
+          border-color: #68737d;
+        }
+      `;
+      var CopiedText = styled2.span`
+        color: #1f73b7;
+      `;
+      var IconText = styled2.span`
+        font-size: 14px;
+      `;
+      var ErrorBoundary = class extends React5.Component {
+        constructor(props) {
+          super(props);
+          __publicField(this, "copyErrorToClipboard", () => {
+            var _a;
+            const errorText = ((_a = this.state.error) == null ? void 0 : _a.toString()) || "Unknown error";
+            navigator.clipboard.writeText(errorText);
+            this.setState({ copied: true });
+            setTimeout(() => {
+              this.setState({ copied: false });
+            }, COPY_SUCCESS_TIMEOUT);
+          });
+          this.state = {
+            hasError: false,
+            error: null,
+            copied: false
+          };
+        }
+        static getDerivedStateFromError(error) {
+          return { hasError: true, error };
+        }
+        componentDidCatch(error, errorInfo) {
+          window.parent.postMessage({
+            type: "iframe-error",
+            error: error.toString(),
+            errorInfo: JSON.stringify(errorInfo)
+          }, "*");
+        }
+        render() {
+          var _a;
+          if (this.state.hasError) {
+            return React5.createElement(ErrorContainer, null, React5.createElement("div", null, React5.createElement(ErrorTitle, null, "An error occurred in your application"), React5.createElement(ErrorMessage, null, "To resolve this issue, please copy the error message below and paste it back into the app builder. App Builder will automatically attempt to fix this issue."), React5.createElement(ErrorPre, null, (_a = this.state.error) == null ? void 0 : _a.toString()), React5.createElement(
+              CopyButton,
+              {
+                onClick: this.copyErrorToClipboard,
+                title: "Click to copy error message"
+              },
+              this.state.copied ? React5.createElement(React5.Fragment, null, React5.createElement(CopiedText, null, "Copied!"), React5.createElement(IconText, null, "✓")) : React5.createElement(React5.Fragment, null, "Copy Error", React5.createElement(IconText, null, "📋"))
+            )));
+          }
+          return this.props.children;
+        }
+      };
+      var Entry = () => {
+        const [base, setBase] = useState3(colorScheme || "light");
+        useEffect3(() => {
+          window.zafClient.invoke("resize", { height: INITIAL_APP_HEIGHT, width: INITIAL_APP_WIDTH });
+          const client = window.zafClient;
+          client.on("colorScheme.changed", (colorScheme2) => setBase(colorScheme2));
+        }, []);
+        const themeObject = __spreadProps(__spreadValues({}, DEFAULT_THEME), {
+          colors: __spreadProps(__spreadValues({}, DEFAULT_THEME.colors), { base })
+        });
+        return React5.createElement(ErrorBoundary, null, React5.createElement(ThemeProvider, { theme: themeObject }, React5.createElement(AppWrapper, null, React5.createElement(App_default, null))));
+      };
+      try {
+        createRoot(document.getElementById("root")).render(React5.createElement(Entry, null));
+      } catch (error) {
+        console.log({ error });
+        window.parent.postMessage({
+          type: "iframe-error",
+          error: error.toString()
+        }, "*");
+      }
+      var index_default = Entry;
+      export {
+        index_default as default
+      };
+    </script>
+  </body>
+</html>
