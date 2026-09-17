@@ -1,8 +1,8 @@
 {
   "app": {
     "name": "PDF Stamp and Send",
-    "short_description": "",
-    "long_description": "",
-    "installation_instructions": ""
+    "short_description": "Stamp ticket and requester details onto a PDF from the Zendesk ticket sidebar.",
+    "long_description": "Choose a PDF from the ticket attachments or upload one from your computer, place the stamp area on the document, and generate a stamped PDF with the requester, ticket, agent, and custom field data. Designed for Zendesk support workflows that need quick PDF annotation and sending.",
+    "installation_instructions": "Install this app in your Zendesk support account, then add it to the ticket sidebar or new ticket sidebar. The app reads ticket metadata and custom fields automatically. Ensure the agent has access to ticket attachments and the custom fields used for stamping."
   }
 }
