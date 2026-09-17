@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "PDF Stamp and Send - Test",
+    "short_description": "Test build of the Zendesk PDF stamping app.",
+    "long_description": "A standalone test build for selecting ticket PDFs, positioning configurable ticket data, and downloading stamped PDFs.",
+    "installation_instructions": "Install only in a test Zendesk environment. This build is separate from the original app and uses the test-app manifest."
+  }
+}

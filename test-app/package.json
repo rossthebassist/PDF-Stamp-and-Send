@@ -1,0 +1,14 @@
+{
+  "name": "pdf-stamp-and-send-test",
+  "private": true,
+  "version": "2.0.0-test",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild app.js --bundle --loader:.js=jsx --format=esm --external:react --external:react-dom/client --external:pdfjs-dist --outfile=dist/app.js",
+    "clean": "rm -rf dist",
+    "package": "npm run clean && npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
