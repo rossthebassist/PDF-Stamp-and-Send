@@ -2,10 +2,12 @@ html, body { margin: 0; min-width: 280px; color: #293239; font: 14px/1.4 system-
 * { box-sizing: border-box; }
 .app { padding: 12px; }
 h1, h2 { font-size: 14px; margin: 0 0 8px; }
+small { font-size: 11px; color: #68737d; font-weight: 400; }
 .help { color: #68737d; font-size: 12px; margin: 0 0 10px; }
 .field { margin: 0 0 10px; }
 label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
 input, textarea, select, button { width: 100%; border: 1px solid #c2c8cc; border-radius: 4px; padding: 7px 8px; font: inherit; background: #fff; }
+input[type="checkbox"] { width: auto; margin-right: 6px; }
 button { cursor: pointer; background: #1f73b7; color: #fff; border-color: #1f73b7; font-weight: 600; }
 button.secondary { background: #fff; color: #293239; border-color: #c2c8cc; }
 button:disabled { cursor: not-allowed; opacity: .55; }
@@ -22,4 +24,5 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .page-nav button { width: auto; padding: 4px 10px; }
 .attachments { display: grid; gap: 6px; margin-top: 6px; }
 .attachment { text-align: left; background: #fff; color: #293239; border-color: #c2c8cc; font-weight: 400; }
+.split-fields { border-left: 3px solid #1f73b7; padding-left: 10px; margin-bottom: 10px; }
 hr { border: 0; border-top: 1px solid #d8dcde; margin: 14px 0; }
